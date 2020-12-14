@@ -8,7 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Yeeep
@@ -33,7 +36,7 @@ public class ItemController {
     public R create(@RequestBody Item item) {
         Item esProduct = itemService.create(item);
         if (esProduct != null) {
-            return R.ok().data(esProduct);
+            return R.ok().data(esProduct).message("数据同步成功");
         } else {
             return R.error();
         }
@@ -53,7 +56,7 @@ public class ItemController {
     }
 
     /**
-     * 导入所有数据库中商品到ES
+     * 全量同步，导入所有数据库中商品到ES
      *
      * @return
      */
@@ -63,7 +66,6 @@ public class ItemController {
         int count = itemService.importAll();
         return R.ok().data(count);
     }
-
 
     /**
      * 简单搜索
@@ -80,6 +82,12 @@ public class ItemController {
                     @ApiParam(value = "pageSize", name = "每页查询数量") @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize) {
         Page<Item> esProductPage = itemService.search(keyword, pageNum, pageSize);
         return R.ok().data(esProductPage);
+    }
+
+    @GetMapping("/search/{keyword}")
+    public R searchByKeyword(@PathVariable("keyword") String keyword) {
+        List<SearchHit<Item>> items = itemService.searchByKeyword(keyword);
+        return R.ok().data(items);
     }
 
 }

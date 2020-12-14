@@ -1,14 +1,15 @@
 package com.example.elasticsearch.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.elasticsearch.elasticsearch.repository.ItemRepository;
 import com.example.elasticsearch.mapper.ItemMapper;
 import com.example.elasticsearch.model.Item;
-import com.example.elasticsearch.repository.ItemRepository;
 import com.example.elasticsearch.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +56,10 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         return itemRepository.findByTitleOrCategoryOrBrand(keyword, keyword, keyword, pageable);
     }
 
+    @Override
+    public List<SearchHit<Item>> searchByKeyword(String keyword) {
+        return itemRepository.findByTitle(keyword);
+    }
 
     /**
      * 导入所有数据库中商品到ES

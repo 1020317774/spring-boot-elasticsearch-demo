@@ -1,12 +1,14 @@
-package com.example.elasticsearch.repository;
+package com.example.elasticsearch.elasticsearch.repository;
 
 import com.example.elasticsearch.model.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class ItemRepositoryTest {
@@ -35,14 +37,25 @@ class ItemRepositoryTest {
     }
 
     @Test
+    void delete() {
+        itemRepository.deleteById(1L);
+    }
+
+    @Test
+    void find() {
+        Optional<Item> byId = itemRepository.findById(1L);
+        byId.ifPresent(System.out::println);
+    }
+
+    @Test
     void query() {
         // // 查询所有
         // Iterable<Item> all = itemRepository.findAll();
         // all.forEach(System.out::println);
         //
         // // 排序查询
-        // Iterable<Item> idSort = itemRepository.findAll(Sort.by("id"));
-        // idSort.forEach(System.out::println);
+        Iterable<Item> idSort = itemRepository.findAll(Sort.by(Sort.Order.asc("id")));
+        idSort.forEach(System.out::println);
         //
         // // 排序查询
         // List<Sort.Order> list = new ArrayList<>();

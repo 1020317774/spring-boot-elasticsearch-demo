@@ -28,8 +28,6 @@ public class SwaggerConfig {
                 .select()
                 //为当前包下controller生成API文档
                 .apis(RequestHandlerSelectors.basePackage("com.example.elasticsearch.controller"))
-                // 排除
-                // .paths(Predicates.not(PathSelectors.regex("/admin/.*")))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -41,8 +39,8 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("SwaggerUI演示")
                 .description("springboot-elasticsearch集成演示")
-                .version("V0.0.1")
-                .contact(new Contact("王一晨", "http://www.rhapsody.com", "1020317774@qq.com"))
+                .version("V1.0")
+                .contact(new Contact("王逸宸", "http://www.rhapsody.com", "1020317774@qq.com"))
                 .build();
     }
 }

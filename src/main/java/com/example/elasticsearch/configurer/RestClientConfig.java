@@ -1,6 +1,7 @@
 package com.example.elasticsearch.configurer;
 
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
@@ -19,9 +20,13 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 @Configuration
 public class RestClientConfig extends AbstractElasticsearchConfiguration {
 
+    @Value("${elasticsearch.url}")
+
     @Override
     public RestHighLevelClient elasticsearchClient() {
         final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
+                // 使用RESTFul接口：9200
+                // 弃用TransportClient接口：9300
                 .connectedTo("localhost:9200", "127.0.0.1:9200")
                 .build();
 

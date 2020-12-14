@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Yeeep
@@ -35,14 +36,14 @@ public class Item implements Serializable {
     /**
      * 标题
      */
-    @Field(analyzer = "ik_max_word",type = FieldType.Text)
+    @Field(analyzer = "ik_max_word", type = FieldType.Text)
     @TableField("`title`")
     private String title;
 
     /**
      * 分类
      */
-    @Field(analyzer = "ik_max_word",type = FieldType.Text)
+    @Field(analyzer = "ik_max_word", type = FieldType.Text)
     @TableField("category")
     private String category;
 
@@ -63,7 +64,6 @@ public class Item implements Serializable {
     /**
      * 图片地址
      */
-    @Field(index = false, type = FieldType.Keyword)
     @TableField("thumbnail")
     private String thumbnail;
 }

@@ -3,6 +3,9 @@ package com.example.elasticsearch.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.elasticsearch.model.Item;
 import org.springframework.data.domain.Page;
+import org.springframework.data.elasticsearch.core.SearchHit;
+
+import java.util.List;
 
 /**
  * 接口
@@ -44,4 +47,12 @@ public interface ItemService extends IService<Item> {
      * @return
      */
     Page<Item> search(String keyword, Integer pageNum, Integer pageSize);
+
+    /**
+     * 高亮
+     *
+     * @param keyword
+     * @return
+     */
+    List<SearchHit<Item>> searchByKeyword(String keyword);
 }
